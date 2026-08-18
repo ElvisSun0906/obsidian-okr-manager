@@ -110,9 +110,6 @@ export class EditKRModal extends Modal {
 			value: "failed",
 		});
 		statusSelect.value = this.status;
-		statusSelect.addEventListener("change", () => {
-			this.status = statusSelect.value as KeyResult["status"];
-		});
 
 		const unitField = contentEl.createDiv("okr-field");
 		unitField.createEl("label", {
@@ -248,6 +245,35 @@ export class EditKRModal extends Modal {
 			this.description = descInput.value.trim();
 		});
 
+		const statusDependentFields = [
+			unitField,
+			currentField,
+			targetField,
+			confField,
+			dueField,
+		];
+		const statusDependentControls = [
+			unitSelect,
+			currentInput,
+			targetInput,
+			confSelect,
+			dueInput,
+		];
+		const syncStatusFields = (): void => {
+			const isFailed = this.status === "failed";
+			for (const field of statusDependentFields) {
+				field.hidden = isFailed;
+			}
+			for (const control of statusDependentControls) {
+				control.disabled = isFailed;
+			}
+			this.validate();
+		};
+		statusSelect.addEventListener("change", () => {
+			this.status = statusSelect.value as KeyResult["status"];
+			syncStatusFields();
+		});
+
 		const footer = contentEl.createDiv("okr-modal-footer");
 		const cancelBtn = footer.createEl("button", {
 			cls: "okr-btn-cancel",
@@ -265,16 +291,18 @@ export class EditKRModal extends Modal {
 		});
 
 		this.validate = () => {
+			const isFailed = this.status === "failed";
 			confirmBtn.disabled =
 				this.isSubmitting ||
 				this.titleValue.length === 0 ||
 				this.owner.length === 0 ||
-				this.due.length === 0 ||
-				targetInput.value.length === 0 ||
-				targetInput.hasClass("okr-invalid") ||
-				currentInput.hasClass("okr-invalid");
+				(!isFailed &&
+					(this.due.length === 0 ||
+						targetInput.value.length === 0 ||
+						targetInput.hasClass("okr-invalid") ||
+						currentInput.hasClass("okr-invalid")));
 		};
-		this.validate();
+		syncStatusFields();
 	}
 
 	onClose(): void {
@@ -284,7 +312,12 @@ export class EditKRModal extends Modal {
 
 	private async submit(): Promise<void> {
 		this.validate();
-		if (this.isSubmitting || !this.titleValue || !this.owner || !this.due) {
+		if (
+			this.isSubmitting ||
+			!this.titleValue ||
+			!this.owner ||
+			(this.status !== "failed" && !this.due)
+		) {
 			return;
 		}
 
