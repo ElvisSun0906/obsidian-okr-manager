@@ -20,7 +20,7 @@ import {
 } from "../utils/objectiveStatus";
 import { reorderKeyResultOrders } from "../utils/sort";
 
-export const DASHBOARD_VIEW_TYPE = "okr-dashboard";
+export const DASHBOARD_VIEW_TYPE = "vault-okr-manager-custom-dashboard";
 
 export class DashboardView extends ItemView {
 	private currentPeriod: string;
