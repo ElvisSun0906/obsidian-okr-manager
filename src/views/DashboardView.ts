@@ -355,7 +355,10 @@ export class DashboardView extends ItemView {
 			text: "●",
 		});
 		const title = left.createEl("span", {
-			cls: "okr-kr-title",
+			cls:
+				kr.status === "failed"
+					? "okr-kr-title okr-kr-title-failed"
+					: "okr-kr-title",
 			text: kr.title,
 		});
 		title.addEventListener("click", (event) => {
@@ -630,7 +633,35 @@ export class DashboardView extends ItemView {
 		failureIcon.setAttribute("role", "img");
 		failureIcon.setAttribute("aria-label", label);
 		failureIcon.setAttribute("title", label);
-		setIcon(failureIcon, "circle-x");
+
+		const size = 20;
+		const stroke = 3;
+		const radius = (size - stroke) / 2;
+		const svg = failureIcon.createSvg("svg", {
+			cls: "okr-kr-failure-svg",
+			attr: {
+				width: size,
+				height: size,
+				viewBox: `0 0 ${size} ${size}`,
+			},
+		});
+		svg.createSvg("circle", {
+			attr: {
+				cx: size / 2,
+				cy: size / 2,
+				r: radius,
+				fill: "none",
+				"stroke-width": stroke,
+			},
+		});
+		svg.createSvg("path", {
+			attr: {
+				d: "M7 7L13 13M13 7L7 13",
+				fill: "none",
+				"stroke-width": stroke,
+				"stroke-linecap": "round",
+			},
+		});
 	}
 
 	private renderEmptyState(container: HTMLElement): void {

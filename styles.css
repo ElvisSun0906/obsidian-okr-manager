@@ -408,6 +408,10 @@
   text-overflow: ellipsis;
   transition: color 0.15s;
 }
+.okr-kr-title-failed {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
 .okr-kr-row:hover .okr-kr-title { color: var(--text-normal); }
 
 .okr-kr-row-right {
@@ -452,10 +456,9 @@
   color: var(--color-red);
 }
 
-.okr-kr-failure-icon svg {
-  width: 20px;
-  height: 20px;
-  stroke-width: 2.5;
+.okr-kr-failure-svg {
+  display: block;
+  stroke: currentColor;
 }
 
 .okr-kr-pct {
