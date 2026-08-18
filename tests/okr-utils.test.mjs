@@ -635,6 +635,40 @@ test("buildObjectiveFrontmatter stores KR current state without check-in history
 	assert.equal(frontmatter["key-results"][0].order, 0);
 });
 
+test("parseObjective preserves failed status for key results only", () => {
+	const parser = new FileParser({});
+	const objective = parser.parseObjective(
+		{ path: "OKR/2026-Q2/O1.md" },
+		{
+			"okr-id": "O1",
+			"okr-period": "2026-Q2",
+			"okr-period-type": "quarter",
+			title: "Improve quality",
+			status: "failed",
+			"key-results": [
+				{
+					"okr-id": "O1-KR1",
+					title: "Raise review coverage",
+					status: "failed",
+				},
+			],
+		},
+	);
+
+	assert.equal(objective.status, "active");
+	assert.equal(objective.keyResults[0].status, "failed");
+});
+
+test("failed key results remain included in objective progress", () => {
+	const parser = new FileParser({});
+	const progress = parser.calculateObjectiveProgress([
+		{ status: "failed", progress: 40 },
+		{ status: "completed", progress: 100 },
+	]);
+
+	assert.equal(progress, 70);
+});
+
 test("parseObjective reads check-in history from markdown progress records", () => {
 	const parser = new FileParser({});
 	const objective = parser.parseObjective(

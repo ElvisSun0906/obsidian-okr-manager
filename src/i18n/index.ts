@@ -222,6 +222,7 @@ const messages: Record<SupportedLocale, Record<string, string>> = {
 		"status.active": "Active",
 		"status.cancelled": "Cancelled",
 		"status.completed": "Completed",
+		"status.failed": "Failed",
 		"status.on-hold": "On hold",
 		"template.autoRenderKrList":
 			"(The plugin renders the KR list automatically. Do not edit this section manually.)",
@@ -425,6 +426,7 @@ const messages: Record<SupportedLocale, Record<string, string>> = {
 		"status.active": "进行中",
 		"status.cancelled": "已取消",
 		"status.completed": "已完成",
+		"status.failed": "已失败",
 		"status.on-hold": "暂停中",
 		"template.autoRenderKrList":
 			"（插件自动渲染 KR 列表，勿手动编辑此区域）",

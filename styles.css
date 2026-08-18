@@ -442,6 +442,22 @@
 .okr-kr-ring-fill.okr-prog-medium { stroke: var(--color-yellow); }
 .okr-kr-ring-fill.okr-prog-low    { stroke: var(--color-red); }
 
+.okr-kr-failure-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--color-red);
+}
+
+.okr-kr-failure-icon svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
 .okr-kr-pct {
   font-size: 11px;
   font-weight: 600;

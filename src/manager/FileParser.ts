@@ -3,6 +3,7 @@ import { createI18n, type I18n } from "../i18n";
 import {
 	Confidence,
 	KeyResult,
+	KeyResultStatus,
 	KRUnit,
 	Objective,
 	OKRPeriodType,
@@ -292,6 +293,18 @@ export class FileParser {
 		return "active";
 	}
 
+	private parseKeyResultStatus(value: unknown): KeyResultStatus {
+		const status = this.parseString(value, "active");
+		if (
+			["active", "completed", "cancelled", "on-hold", "failed"].includes(
+				status,
+			)
+		) {
+			return status as KeyResultStatus;
+		}
+		return "active";
+	}
+
 	private parseUnit(value: unknown): KRUnit {
 		const u = this.parseString(value, "score");
 		if (["score", "percentage", "number", "boolean"].includes(u)) {
@@ -460,7 +473,7 @@ export class FileParser {
 					? this.calculateKRProgress(current, target, unit)
 					: storedProgress,
 			),
-			status: this.parseStatus(record[FRONTMATTER_STATUS]),
+			status: this.parseKeyResultStatus(record[FRONTMATTER_STATUS]),
 			confidence: this.parseConfidence(record[FRONTMATTER_CONFIDENCE]),
 			created: this.parseString(record[FRONTMATTER_CREATED]),
 			due: this.parseString(record[FRONTMATTER_DUE]),

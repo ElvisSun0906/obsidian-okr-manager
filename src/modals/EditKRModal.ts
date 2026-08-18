@@ -105,6 +105,10 @@ export class EditKRModal extends Modal {
 			text: this.t("status.cancelled"),
 			value: "cancelled",
 		});
+		statusSelect.createEl("option", {
+			text: this.t("status.failed"),
+			value: "failed",
+		});
 		statusSelect.value = this.status;
 		statusSelect.addEventListener("change", () => {
 			this.status = statusSelect.value as KeyResult["status"];

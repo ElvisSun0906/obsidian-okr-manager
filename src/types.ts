@@ -1,4 +1,5 @@
 export type OKRStatus = "active" | "completed" | "cancelled" | "on-hold";
+export type KeyResultStatus = OKRStatus | "failed";
 export type Confidence = "low" | "medium" | "high";
 export type OKRPeriodType = "week" | "month" | "quarter" | "year";
 export type OKRPeriod = string; // e.g. "2026-W20" | "2026-05" | "2026-Q2" | "2026"
@@ -32,7 +33,7 @@ export interface KeyResult {
 	current: number;
 	target: number;
 	progress: number; // 0–100
-	status: OKRStatus;
+	status: KeyResultStatus;
 	confidence: Confidence;
 	created: string;
 	due: string;

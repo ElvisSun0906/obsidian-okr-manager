@@ -367,7 +367,7 @@ export class DashboardView extends ItemView {
 		});
 
 		const right = row.createDiv("okr-kr-row-right");
-		this.renderProgressRing(right, kr.progress);
+		this.renderKRProgressIndicator(right, kr);
 		right.createEl("span", { cls: "okr-kr-pct", text: `${kr.progress}%` });
 
 		const checkInButton = right.createEl("button", {
@@ -614,6 +614,23 @@ export class DashboardView extends ItemView {
 				transform: `rotate(-90 ${size / 2} ${size / 2})`,
 			},
 		});
+	}
+
+	private renderKRProgressIndicator(
+		container: HTMLElement,
+		keyResult: KeyResult,
+	): void {
+		if (keyResult.status !== "failed") {
+			this.renderProgressRing(container, keyResult.progress);
+			return;
+		}
+
+		const failureIcon = container.createDiv("okr-kr-failure-icon");
+		const label = this.t("status.failed");
+		failureIcon.setAttribute("role", "img");
+		failureIcon.setAttribute("aria-label", label);
+		failureIcon.setAttribute("title", label);
+		setIcon(failureIcon, "circle-x");
 	}
 
 	private renderEmptyState(container: HTMLElement): void {
