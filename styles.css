@@ -453,7 +453,7 @@
   width: 20px;
   height: 20px;
   flex-shrink: 0;
-  color: var(--color-red);
+  color: #ff0000;
 }
 
 .okr-kr-failure-svg {

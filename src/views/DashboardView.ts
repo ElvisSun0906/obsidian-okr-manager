@@ -656,7 +656,7 @@ export class DashboardView extends ItemView {
 		});
 		svg.createSvg("path", {
 			attr: {
-				d: "M7 7L13 13M13 7L7 13",
+				d: "M6 6L14 14M14 6L6 14",
 				fill: "none",
 				"stroke-width": stroke,
 				"stroke-linecap": "round",
